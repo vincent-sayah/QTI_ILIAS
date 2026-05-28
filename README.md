@@ -1,15 +1,15 @@
 # QTI_ILIAS
-Générateur Excel avec macro VBA permettant de créer automatiquement un fichier XML QTI compatible ILIAS 8 à partir de questions QCU saisies dans un tableau.
+Générateur Excel avec macro VBA permettant de créer automatiquement un fichier XML QTI compatible ILIAS 8 et 10.5 à partir de questions QCU saisies dans un tableau.
 
-# Générateur QTI ILIAS 8 — QCU uniquement
+# Générateur QTI ILIAS — QCU uniquement
 
-Ce projet fournit un fichier Excel macro-compatible permettant de générer automatiquement un fichier XML QTI importable dans ILIAS 8.
+Ce projet fournit un fichier Excel macro-compatible permettant de générer automatiquement un fichier XML QTI importable dans ILIAS 8 et 10.5.
 
 La version actuelle prend uniquement en charge les questions de type **QCU** : Question à Choix Unique.
 
 ## Objectif
 
-L’objectif est de permettre à un utilisateur de saisir des questions dans un fichier Excel, puis de générer automatiquement un fichier XML prêt à être importé dans ILIAS 8.
+L’objectif est de permettre à un utilisateur de saisir des questions dans un fichier Excel, puis de générer automatiquement un fichier XML prêt à être importé dans ILIAS 8 et 10.5.
 
 Le fichier Excel permet de renseigner :
 
@@ -87,11 +87,11 @@ Cela signifie que la réponse 1 est la bonne réponse.
 |---|---|---|---|---|---|
 | Quelle est la capitale de la France ? | Paris | Lyon | Marseille | 1 | 1 |
 
-## Import dans ILIAS 8
+## Import dans ILIAS 8 et 10.5
 
 Une fois le fichier `qti_ilias8.xml` généré :
 
-1. Se connecter à ILIAS 8.
+1. Se connecter à ILIAS 8 ou 10.5.
 2. Aller dans un pool de questions ou un test.
 3. Utiliser la fonction d’import.
 4. Sélectionner le fichier XML généré.
@@ -115,7 +115,7 @@ Pour débloquer le fichier :
 
 ## Compatibilité
 
-Testé pour une génération XML destinée à ILIAS 8.
+Testé pour une génération XML destinée à ILIAS 8 et 10.5.
 
 La compatibilité peut dépendre de la configuration exacte d’ILIAS et du mode d’import utilisé. Il est recommandé de tester l’import avec quelques questions avant un import massif.
 
