@@ -24,7 +24,7 @@ Le fichier Excel permet de renseigner :
 Le fichier principal du projet est :
 
 ```text
-generateur_qti_ilias8_qcu_uniquement_bouton_gauche.xlsm
+QTI_ILIAS.xlsm
 ```
 
 Il s’agit d’un fichier Excel avec macros VBA.
@@ -138,18 +138,8 @@ Fonctionnalités envisagées pour de futures versions :
 - contrôle renforcé avant génération XML ;
 - interface de génération plus avancée.
 
-## Licence
-
-À compléter selon le choix du propriétaire du projet.
-
-Exemples possibles :
-
-- MIT
-- GPL-3.0
-- Apache-2.0
-- Licence privée
 
 ## Auteur
 
-Projet de génération de questions QTI pour ILIAS 8 à partir d’un fichier Excel.
+Vincent Sayah
 
