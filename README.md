@@ -1,145 +1,225 @@
-# QTI_ILIAS
-Générateur Excel avec macro VBA permettant de créer automatiquement un fichier XML QTI compatible ILIAS 8 et 10.5 à partir de questions QCU saisies dans un tableau.
+# Générateur Excel QTI pour ILIAS — Version 2
 
-# Générateur QTI ILIAS — QCU uniquement
+Ce dépôt contient un classeur Excel macro-enabled (`.xlsm`) permettant de générer un fichier XML QTI importable dans ILIAS à partir d’une saisie structurée de questions dans Excel.
 
-Ce projet fournit un fichier Excel macro-compatible permettant de générer automatiquement un fichier XML QTI importable dans ILIAS 8 et 10.5.
+La **version 2** enrichit la version initiale avec la gestion de l’auteur, des feedbacks par réponse, des corrections détaillées et une interface de génération plus avancée.
 
-La version actuelle prend uniquement en charge les questions de type **QCU** : Question à Choix Unique.
+---
 
-## Objectif
-
-L’objectif est de permettre à un utilisateur de saisir des questions dans un fichier Excel, puis de générer automatiquement un fichier XML prêt à être importé dans ILIAS 8 et 10.5.
-
-Le fichier Excel permet de renseigner :
-
-- l’intitulé de la question ;
-- plusieurs réponses possibles ;
-- la bonne réponse ;
-- la pondération de la question ;
-- puis de générer un fichier XML via un bouton.
-
-## Fichier fourni
-
-Le fichier principal du projet est :
+## Fichier principal
 
 ```text
 QTI_ILIAS.xlsm
 ```
 
-Il s’agit d’un fichier Excel avec macros VBA.
+Le classeur contient les feuilles nécessaires à la saisie des questions, au calcul du XML QTI et à la génération du fichier XML final via macro VBA.
 
-## Fonctionnalités
+---
 
-- Saisie simple des questions dans Excel.
-- Gestion des questions QCU uniquement.
-- Jusqu’à 8 réponses possibles par question.
-- Définition de la bonne réponse par numéro.
-- Définition de la pondération de chaque question.
-- Bouton **Générer XML** placé au début de la feuille.
-- Génération automatique d’un fichier XML QTI.
-- XML destiné à l’import dans ILIAS 8.
+## Fonctionnalités principales
 
-## Structure du fichier Excel
+- Saisie de questions QCU dans Excel.
+- Génération automatique d’un fichier XML QTI compatible avec l’import dans ILIAS.
+- Bouton de génération XML intégré.
+- Recalcul automatique des formules avant export.
+- Export des lignes XML non vides depuis la feuille technique `XML_QTI`.
 
-Le classeur contient notamment :
+---
 
-- `Mode_emploi` : instructions d’utilisation ;
-- `Saisie_Questions` : feuille principale de saisie ;
-- `XML_QTI` : feuille de génération XML ;
-- `Generation` : feuille technique utilisée par les formules et la macro.
+## Nouveautés de la version 2
 
-## Utilisation
+### 1. Auteur de la question
 
-1. Télécharger le fichier `.xlsm`.
-2. Ouvrir le fichier avec Microsoft Excel.
-3. Activer les macros si Excel le demande.
-4. Aller dans la feuille `Saisie_Questions`.
-5. Compléter les colonnes nécessaires :
-   - question ;
-   - réponses ;
-   - bonne réponse ;
-   - pondération.
-6. Cliquer sur le bouton **Générer XML**.
-7. Le fichier XML est généré automatiquement dans le même dossier que le fichier Excel.
+La V2 ajoute une colonne **Auteur** dans la saisie des questions.
 
-Le fichier généré s’appelle :
+Cette information remplace la valeur générique utilisée précédemment :
 
 ```text
-qti_ilias8.xml
+Générateur Excel QTI
 ```
 
-## Format attendu pour la bonne réponse
+Chaque question peut donc maintenant être associée à son auteur réel.
 
-Pour une question QCU, la bonne réponse doit être indiquée par un seul numéro.
+---
+
+### 2. Feedbacks par réponse
+
+La V2 permet de renseigner un feedback optionnel pour chaque proposition de réponse.
 
 Exemple :
 
+| Réponse | Feedback |
+|---|---|
+| Paris | Bonne réponse : Paris est la capitale de la France. |
+| Lyon | Lyon est une grande ville française, mais ce n’est pas la capitale. |
+| Marseille | Marseille n’est pas la capitale de la France. |
+| Toulouse | Toulouse n’est pas la capitale de la France. |
+
+Les feedbacks restent facultatifs. Si un champ de feedback est vide, il n’est pas nécessaire de le compléter.
+
+---
+
+### 3. Explication ou correction détaillée
+
+Une colonne **Explication / correction détaillée** permet d’ajouter un commentaire global à la question.
+
+Cette explication peut être utilisée pour donner une correction complète après réponse, indépendamment des feedbacks associés à chaque proposition.
+
+---
+
+### 4. Interface de génération améliorée
+
+La V2 ajoute une feuille dédiée :
+
 ```text
-1
+Interface_Generation
 ```
 
-Cela signifie que la réponse 1 est la bonne réponse.
+Cette feuille fournit :
 
-## Exemple de saisie
+- les paramètres principaux de génération ;
+- le nom du fichier XML généré ;
+- le type de question ;
+- la version cible ILIAS ;
+- un tableau de bord de contrôle ;
+- des liens rapides vers les feuilles importantes ;
+- une procédure de génération rappelée directement dans le classeur.
 
-| Question | Réponse 1 | Réponse 2 | Réponse 3 | Bonne réponse | Pondération |
-|---|---|---|---|---|---|
-| Quelle est la capitale de la France ? | Paris | Lyon | Marseille | 1 | 1 |
+---
 
-## Import dans ILIAS 8 et 10.5
+## Feuilles du classeur
 
-Une fois le fichier `qti_ilias8.xml` généré :
+### `Saisie_Questions`
 
-1. Se connecter à ILIAS 8 ou 10.5.
-2. Aller dans un pool de questions ou un test.
-3. Utiliser la fonction d’import.
+Feuille principale de saisie.
+
+Elle contient les informations nécessaires à la génération des questions :
+
+- identifiant ou numéro de question ;
+- titre ;
+- énoncé ;
+- propositions de réponses ;
+- score ou indicateur de bonne réponse ;
+- auteur ;
+- feedbacks par réponse ;
+- explication / correction détaillée ;
+- colonne de contrôle.
+
+### `Generation`
+
+Feuille technique utilisée pour construire les blocs XML intermédiaires.
+
+Cette feuille ne doit généralement pas être modifiée manuellement.
+
+### `XML_QTI`
+
+Feuille contenant les lignes XML finales qui seront exportées par la macro.
+
+La macro lit les lignes non vides de cette feuille pour créer le fichier XML.
+
+### `Interface_Generation`
+
+Nouvelle interface de pilotage introduite en V2.
+
+Elle sert de point d’entrée pour vérifier les paramètres, contrôler les données et accéder rapidement aux feuilles utiles.
+
+---
+
+## Utilisation
+
+1. Ouvrir le fichier `QTI_ILIAS.xlsm` dans Microsoft Excel.
+2. Activer les macros si Excel le demande.
+3. Aller dans la feuille `Saisie_Questions`.
+4. Compléter les questions et les réponses.
+5. Renseigner, si nécessaire :
+   - l’auteur ;
+   - les feedbacks par réponse ;
+   - l’explication ou correction détaillée.
+6. Vérifier que la colonne de contrôle indique que les lignes sont valides.
+7. Cliquer sur le bouton **Générer XML**.
+8. Importer le fichier XML généré dans ILIAS.
+
+---
+
+## Conseils de saisie
+
+- Éviter les caractères spéciaux non nécessaires dans les identifiants.
+- Compléter au minimum le titre, l’énoncé, les réponses et la bonne réponse.
+- Laisser les champs optionnels vides lorsqu’ils ne sont pas utiles.
+- Vérifier les feedbacks dans ILIAS après import.
+- Conserver une copie du fichier `.xlsm` avant toute modification importante.
+
+---
+
+## Import dans ILIAS
+
+Après génération du fichier XML :
+
+1. Se connecter à ILIAS.
+2. Aller dans le test ou le pool de questions cible.
+3. Utiliser la fonction d’import QTI.
 4. Sélectionner le fichier XML généré.
-5. Vérifier les questions importées.
+5. Contrôler quelques questions importées, notamment :
+   - l’énoncé ;
+   - les réponses ;
+   - les bonnes réponses ;
+   - les feedbacks par réponse ;
+   - les feedbacks/corrections générales.
 
-## Sécurité des macros Excel
+---
 
-Le fichier utilise une macro VBA pour générer le fichier XML.
+## Corrections intégrées après validation V2
 
-Selon la configuration de sécurité d’Excel, les macros peuvent être bloquées au premier lancement.
+La version V2 finale corrige deux problèmes identifiés lors des tests :
 
-Pour débloquer le fichier :
+### Correction ouverture Excel
 
-1. Fermer Excel.
-2. Faire clic droit sur le fichier `.xlsm`.
-3. Cliquer sur **Propriétés**.
-4. Cocher **Débloquer** si l’option est présente.
-5. Cliquer sur **Appliquer**, puis **OK**.
-6. Rouvrir le fichier Excel.
-7. Activer les macros.
+La table Excel `QuestionsTable` a été corrigée afin d’éviter le message de réparation à l’ouverture du fichier.
 
-## Compatibilité
+### Correction import feedbacks ILIAS
 
-Testé pour une génération XML destinée à ILIAS 8 et 10.5.
+Les feedbacks par réponse ont été ajustés pour être correctement reportés dans l’édition de la question après import dans ILIAS.
 
-La compatibilité peut dépendre de la configuration exacte d’ILIAS et du mode d’import utilisé. Il est recommandé de tester l’import avec quelques questions avant un import massif.
+Les identifiants de réponse utilisés dans le XML suivent maintenant une forme compatible avec ILIAS, par exemple :
 
-## Limitations de la version actuelle
+```text
+response_0
+response_1
+response_2
+response_3
+```
 
-- Seules les questions de type QCU sont prises en charge.
-- Les questions QCM ne sont pas prises en charge dans cette version.
-- Le fichier nécessite Microsoft Excel avec macros activées.
-- La génération XML se fait localement via VBA.
+---
 
-## Évolutions possibles
+## Prérequis
 
-Fonctionnalités envisagées pour de futures versions :
+- Microsoft Excel avec prise en charge des macros VBA.
+- Macros activées à l’ouverture du fichier.
+- ILIAS avec fonction d’import QTI disponible.
 
-- prise en charge des QCM ;
-- génération d’un package ZIP compatible import ILIAS ;
-- ajout de feedbacks par réponse ;
-- ajout d’explications ou corrections détaillées ;
-- gestion des catégories ;
-- contrôle renforcé avant génération XML ;
-- interface de génération plus avancée.
+---
 
+## Sécurité
+
+Le fichier contient une macro VBA destinée uniquement à exporter le XML généré depuis la feuille `XML_QTI`.
+
+Avant utilisation en production :
+
+- vérifier le code VBA si nécessaire ;
+- conserver une copie originale du classeur ;
+- tester l’import XML sur un environnement ILIAS de test.
+
+---
+
+## Version
+
+```text
+Version : 2.0
+Statut  : validée après correction des bugs d’ouverture Excel et de feedbacks ILIAS
+```
+
+---
 
 ## Auteur
 
 Vincent Sayah
-
