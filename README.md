@@ -1,8 +1,8 @@
-# Générateur Excel QTI pour ILIAS — Version 2
+# Générateur Excel QTI pour ILIAS — Version 2.0.1
 
 Ce dépôt contient un classeur Excel macro-enabled (`.xlsm`) permettant de générer un fichier XML QTI importable dans ILIAS à partir d’une saisie structurée de questions dans Excel.
 
-La **version 2** enrichit la version initiale avec la gestion de l’auteur, des feedbacks par réponse, des corrections détaillées et une interface de génération plus avancée.
+La **version 2.0.1** conserve les fonctionnalités de la V2 et ajoute la possibilité de générer jusqu’à **200 questions** dans un même fichier XML QTI.
 
 ---
 
@@ -20,15 +20,42 @@ Le classeur contient les feuilles nécessaires à la saisie des questions, au ca
 
 - Saisie de questions QCU dans Excel.
 - Génération automatique d’un fichier XML QTI compatible avec l’import dans ILIAS.
+- Prise en charge de **200 questions maximum**.
 - Bouton de génération XML intégré.
 - Recalcul automatique des formules avant export.
 - Export des lignes XML non vides depuis la feuille technique `XML_QTI`.
+- Gestion d’un auteur par question.
+- Gestion des feedbacks par réponse.
+- Gestion d’une explication ou correction détaillée par question.
 
 ---
 
-## Nouveautés de la version 2
+## Nouveautés de la version 2.0.1
 
-### 1. Auteur de la question
+### Passage à 200 questions
+
+La version 2.0.1 augmente la capacité maximale du classeur de **100 à 200 questions**.
+
+Les éléments suivants ont été étendus :
+
+- table Excel `QuestionsTable` ;
+- feuille `Saisie_Questions` ;
+- feuille technique `Generation` ;
+- feuille finale `XML_QTI` ;
+- compteurs et contrôles de génération ;
+- interface de génération.
+
+### Correction de la génération au-delà de 100 questions
+
+Une anomalie empêchait la génération effective des questions au-delà de la question 100.
+
+La correction supprime les lignes doublons vides 105 à 204 et garantit que les questions 101 à 200 sont bien reprises dans le XML QTI généré.
+
+---
+
+## Fonctionnalités de la version 2
+
+### Auteur de la question
 
 La V2 ajoute une colonne **Auteur** dans la saisie des questions.
 
@@ -40,9 +67,7 @@ Générateur Excel QTI
 
 Chaque question peut donc maintenant être associée à son auteur réel.
 
----
-
-### 2. Feedbacks par réponse
+### Feedbacks par réponse
 
 La V2 permet de renseigner un feedback optionnel pour chaque proposition de réponse.
 
@@ -57,17 +82,13 @@ Exemple :
 
 Les feedbacks restent facultatifs. Si un champ de feedback est vide, il n’est pas nécessaire de le compléter.
 
----
-
-### 3. Explication ou correction détaillée
+### Explication ou correction détaillée
 
 Une colonne **Explication / correction détaillée** permet d’ajouter un commentaire global à la question.
 
 Cette explication peut être utilisée pour donner une correction complète après réponse, indépendamment des feedbacks associés à chaque proposition.
 
----
-
-### 4. Interface de génération améliorée
+### Interface de génération améliorée
 
 La V2 ajoute une feuille dédiée :
 
@@ -81,6 +102,7 @@ Cette feuille fournit :
 - le nom du fichier XML généré ;
 - le type de question ;
 - la version cible ILIAS ;
+- le nombre maximum de questions ;
 - un tableau de bord de contrôle ;
 - des liens rapides vers les feuilles importantes ;
 - une procédure de génération rappelée directement dans le classeur.
@@ -105,6 +127,14 @@ Elle contient les informations nécessaires à la génération des questions :
 - explication / correction détaillée ;
 - colonne de contrôle.
 
+La table `QuestionsTable` est dimensionnée sur la plage :
+
+```text
+A4:Y204
+```
+
+Cela correspond à une ligne d’en-tête et à 200 lignes de saisie.
+
 ### `Generation`
 
 Feuille technique utilisée pour construire les blocs XML intermédiaires.
@@ -119,7 +149,7 @@ La macro lit les lignes non vides de cette feuille pour créer le fichier XML.
 
 ### `Interface_Generation`
 
-Nouvelle interface de pilotage introduite en V2.
+Interface de pilotage introduite en V2.
 
 Elle sert de point d’entrée pour vérifier les paramètres, contrôler les données et accéder rapidement aux feuilles utiles.
 
@@ -143,6 +173,7 @@ Elle sert de point d’entrée pour vérifier les paramètres, contrôler les do
 
 ## Conseils de saisie
 
+- Ne pas dépasser 200 questions par génération.
 - Éviter les caractères spéciaux non nécessaires dans les identifiants.
 - Compléter au minimum le titre, l’énoncé, les réponses et la bonne réponse.
 - Laisser les champs optionnels vides lorsqu’ils ne sont pas utiles.
@@ -166,27 +197,16 @@ Après génération du fichier XML :
    - les feedbacks par réponse ;
    - les feedbacks/corrections générales.
 
+La version 2.0.1 a été validée avec un fichier généré contenant plus de 100 questions importées dans ILIAS.
+
 ---
 
-## Corrections intégrées après validation V2
+## Documentation technique
 
-La version V2 finale corrige deux problèmes identifiés lors des tests :
-
-### Correction ouverture Excel
-
-La table Excel `QuestionsTable` a été corrigée afin d’éviter le message de réparation à l’ouverture du fichier.
-
-### Correction import feedbacks ILIAS
-
-Les feedbacks par réponse ont été ajustés pour être correctement reportés dans l’édition de la question après import dans ILIAS.
-
-Les identifiants de réponse utilisés dans le XML suivent maintenant une forme compatible avec ILIAS, par exemple :
+La documentation technique spécifique à la version 2.0.1 est disponible dans :
 
 ```text
-response_0
-response_1
-response_2
-response_3
+Doc/Doc_tech_V2.0.1.md
 ```
 
 ---
@@ -214,8 +234,9 @@ Avant utilisation en production :
 ## Version
 
 ```text
-Version : 2.0
-Statut  : validée après correction des bugs d’ouverture Excel et de feedbacks ILIAS
+Version : 2.0.1
+Statut  : validée avec génération et import ILIAS de plus de 100 questions
+Capacité : 200 questions maximum
 ```
 
 ---

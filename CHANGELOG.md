@@ -6,6 +6,38 @@ Le format s’inspire de [Keep a Changelog](https://keepachangelog.com/fr/1.0.0/
 
 ---
 
+## [2.0.1] - 2026-07-02
+
+### Modifié
+
+- Passage du nombre maximum de questions générables de **100 à 200 questions**.
+- Extension de la table Excel `QuestionsTable` de `A4:Y104` à `A4:Y204`.
+- Extension des formules de la feuille `Saisie_Questions` jusqu’à la ligne 204.
+- Extension de la feuille technique `Generation` jusqu’à la ligne 204.
+- Extension de la feuille `XML_QTI` afin de générer les blocs XML jusqu’à la question 200.
+- Mise à jour des compteurs et plages de contrôle de `O5:O104` vers `O5:O204`.
+- Mise à jour de l’interface utilisateur pour afficher la limite de **200 questions maximum**.
+- Mise à jour de la documentation projet pour préciser la nouvelle capacité de génération.
+
+### Corrigé
+
+- Correction du problème qui limitait la génération XML effective à **100 questions**, même lorsque plus de 100 questions étaient saisies.
+- Suppression des lignes doublons vides 105 à 204 dans les feuilles `Saisie_Questions` et `Generation`.
+- Correction de la continuité des formules pour que les questions 101 à 200 soient bien prises en compte dans le XML généré.
+
+### Vérifié
+
+- Génération XML validée avec plus de 100 questions.
+- Import ILIAS validé avec plus de 100 questions générées.
+- Macros VBA conservées à l’identique.
+
+### Notes
+
+- La version 2.0.1 est une version corrective et d’extension de capacité.
+- Le fonctionnement fonctionnel de la V2 est conservé : auteur, feedbacks par réponse, explication/correction détaillée et génération QTI compatible ILIAS.
+
+---
+
 ## [2.0.0] - 2026-05-31
 
 ### Ajouté
